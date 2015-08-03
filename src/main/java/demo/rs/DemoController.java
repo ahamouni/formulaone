@@ -12,7 +12,7 @@ public class DemoController {
 	
 	@RequestMapping("/")
 	public String hello() {
-		return "Hi new Man!!";
+		return "Hi new new   Man!!";
 	}
 	
 	/**

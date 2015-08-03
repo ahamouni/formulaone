@@ -1,0 +1,6 @@
+{
+  "name": "Demo Spring boot Sample",
+  "description": "Demo Spring boot sample",
+  "repository": "https://github.com/arezkih/demo",
+  "keywords": ["demo", "boot"]
+}
