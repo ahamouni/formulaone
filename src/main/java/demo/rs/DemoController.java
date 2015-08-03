@@ -12,7 +12,7 @@ public class DemoController {
 	
 	@RequestMapping("/")
 	public String hello() {
-		return "Hi Man!!";
+		return "Hi new Man!!";
 	}
 	
 	/**
@@ -22,7 +22,7 @@ public class DemoController {
 	 */
 	@RequestMapping(value="/user/{name}", method=RequestMethod.GET)
 	public MyResponse retrieve(@PathVariable("name")  String name) {
-		return new MyResponse("new hama", 123);
+		return new MyResponse("hama", 123);
 	}
 	 
 }
