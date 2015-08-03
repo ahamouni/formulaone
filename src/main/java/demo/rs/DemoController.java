@@ -22,7 +22,7 @@ public class DemoController {
 	 */
 	@RequestMapping(value="/user/{name}", method=RequestMethod.GET)
 	public MyResponse retrieve(@PathVariable("name")  String name) {
-		return new MyResponse("hama", 123);
+		return new MyResponse("new hama", 123);
 	}
 	 
 }
