@@ -1,0 +1,4 @@
+id;name;password;created_by;created_date;modified_by;modified_date
+1;admin;$2a$10$ngqvEkn8T74jhA2N453YzOuA33lcVGdtpt1XSO.tcTJfsLEGVHeG.;admin;now();admin;now()
+
+
