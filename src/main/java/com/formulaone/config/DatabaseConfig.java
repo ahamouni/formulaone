@@ -5,6 +5,7 @@ import javax.sql.DataSource;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
 import org.springframework.boot.autoconfigure.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.boot.bind.RelaxedPropertyResolver;
@@ -47,16 +48,20 @@ public class DatabaseConfig implements EnvironmentAware {
 	@Override
 	public void setEnvironment(Environment env) {
 		this.env = env;
-		this.dataSourcePropertyResolver = new RelaxedPropertyResolver(env, "spring.datasource.");
-		this.liquiBasePropertyResolver = new RelaxedPropertyResolver(env, "liquiBase.");
+		this.dataSourcePropertyResolver = new RelaxedPropertyResolver(env,
+				"spring.datasource.");
+		this.liquiBasePropertyResolver = new RelaxedPropertyResolver(env,
+				"liquiBase.");
 	}
 
 	@Bean
-	public LocalContainerEntityManagerFactoryBean entityManagerFactory(EntityManagerFactoryBuilder builder) {
+	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+			EntityManagerFactoryBuilder builder) {
 
 		final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
 
-		LocalContainerEntityManagerFactoryBean emf = builder.dataSource(dataSource())
+		LocalContainerEntityManagerFactoryBean emf = builder
+				.dataSource(dataSource())
 				.packages(new String[] { "com.formulaone.domain" }).build();
 
 		emf.setJpaVendorAdapter(vendorAdapter);
@@ -64,15 +69,18 @@ public class DatabaseConfig implements EnvironmentAware {
 		return emf;
 	}
 
-	@Bean
+	@Bean(destroyMethod = "close")
+	@ConditionalOnExpression("#{!environment.acceptsProfiles('cloud') && !environment.acceptsProfiles('heroku')}")
 	@ConfigurationProperties(locations = "classpath:application.yml", prefix = "spring.datasource")
 	@Primary
 	public DataSource dataSource() {
+	      log.info("Configuring JDBC datasource from " + env.getProperty("spring.active.profiles"));
 		return DataSourceBuilder.create().build();
 	}
 
 	@Bean
-	public PlatformTransactionManager transactionManager(final EntityManagerFactory emf) {
+	public PlatformTransactionManager transactionManager(
+			final EntityManagerFactory emf) {
 		final JpaTransactionManager transactionManager = new JpaTransactionManager();
 		transactionManager.setEntityManagerFactory(emf);
 		return transactionManager;
@@ -82,12 +90,16 @@ public class DatabaseConfig implements EnvironmentAware {
 	public SpringLiquibase liquibase(DataSource dataSource) {
 		SpringLiquibase liquibase = new SpringLiquibase();
 		liquibase.setDataSource(dataSource);
-		liquibase.setChangeLog(liquiBasePropertyResolver.getProperty("change-log"));
-		liquibase.setContexts(liquiBasePropertyResolver.getProperty("contexts"));
-		liquibase.setDropFirst(Boolean.valueOf(liquiBasePropertyResolver.getProperty("drop-first")));
+		liquibase.setChangeLog(
+				liquiBasePropertyResolver.getProperty("change-log"));
+		liquibase
+				.setContexts(liquiBasePropertyResolver.getProperty("contexts"));
+		liquibase.setDropFirst(Boolean
+				.valueOf(liquiBasePropertyResolver.getProperty("drop-first")));
 
 		if (env.acceptsProfiles(Constants.SPRING_PROFILE_FAST)) {
-			if ("org.h2.jdbcx.JdbcDataSource".equals(dataSourcePropertyResolver.getProperty("dataSourceClassName"))) {
+			if ("org.h2.jdbcx.JdbcDataSource".equals(dataSourcePropertyResolver
+					.getProperty("dataSourceClassName"))) {
 				liquibase.setShouldRun(true);
 				log.warn(
 						"Using '{}' profile with H2 database in memory is not optimal, you should consider switching to"

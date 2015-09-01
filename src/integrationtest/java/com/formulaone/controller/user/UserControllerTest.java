@@ -32,7 +32,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.codec.Base64;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestClientException;
@@ -44,7 +43,6 @@ import com.formulaone.domain.security.RoleEnum;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FormulaOneApplication.class)
-@ActiveProfiles("qa")
 @WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @IntegrationTest("server.port:0")
@@ -92,11 +90,14 @@ public class UserControllerTest {
 		Set<String> roles = new HashSet<>();
 		roles.add(RoleEnum.ADMIN.name());
 		roles.add(RoleEnum.USER.name());
-		UserRequest request = new UserRequest(NEW_USER, NEW_PASSWORD, NEW_PASSWORD, roles);
-		HttpEntity<UserRequest> entity = new HttpEntity<UserRequest>(request, httpHeaders);
+		UserRequest request = new UserRequest(NEW_USER, NEW_PASSWORD,
+				NEW_PASSWORD, roles);
+		HttpEntity<UserRequest> entity = new HttpEntity<UserRequest>(request,
+				httpHeaders);
 
 		try {
-			ResponseEntity<UserResponse> response = restTemplate.exchange(base.toString(), HttpMethod.POST, entity,
+			ResponseEntity<UserResponse> response = restTemplate.exchange(
+					base.toString(), HttpMethod.POST, entity,
 					UserResponse.class);
 
 			UserResponse userResponse = response.getBody();
@@ -121,8 +122,10 @@ public class UserControllerTest {
 		System.out.println("ID IS " + createdId);
 		vars.put("id", createdId);
 		try {
-			ResponseEntity<UserResponse> response = restTemplate.exchange(base + "/id/{id}", HttpMethod.GET,
-					new HttpEntity<UserResponse>(httpHeaders), UserResponse.class, vars);
+			ResponseEntity<UserResponse> response = restTemplate.exchange(
+					base + "/id/{id}", HttpMethod.GET,
+					new HttpEntity<UserResponse>(httpHeaders),
+					UserResponse.class, vars);
 
 			UserResponse userResponse = response.getBody();
 			assertThat(userResponse, notNullValue());
@@ -141,8 +144,10 @@ public class UserControllerTest {
 	@Test
 	public void test_3_SuccessfulAllUsersRetrieval() {
 		try {
-			ResponseEntity<ArrayList> response = restTemplate.exchange(base + "", HttpMethod.GET,
-					new HttpEntity<List<UserResponse>>(httpHeaders), ArrayList.class);
+			ResponseEntity<ArrayList> response = restTemplate.exchange(
+					base + "", HttpMethod.GET,
+					new HttpEntity<List<UserResponse>>(httpHeaders),
+					ArrayList.class);
 
 			assertThat(response, notNullValue());
 			assertThat(response.getBody(), notNullValue());
@@ -161,8 +166,10 @@ public class UserControllerTest {
 		Map<String, String> vars = new HashMap<String, String>();
 		vars.put("name", CREATED_USER);
 		try {
-			ResponseEntity<UserResponse> response = restTemplate.exchange(base + "/name/{name}", HttpMethod.GET,
-					new HttpEntity<UserResponse>(httpHeaders), UserResponse.class, vars);
+			ResponseEntity<UserResponse> response = restTemplate.exchange(
+					base + "/name/{name}", HttpMethod.GET,
+					new HttpEntity<UserResponse>(httpHeaders),
+					UserResponse.class, vars);
 
 			UserResponse userResponse = response.getBody();
 			assertThat(userResponse, notNullValue());
@@ -182,27 +189,33 @@ public class UserControllerTest {
 	public void test_5_UpdateUser() {
 		Map<String, Long> vars = new HashMap<String, Long>();
 		vars.put("id", createdId);
-		ResponseEntity<UserResponse> response = restTemplate.exchange(base + "/id/{id}", HttpMethod.GET,
-				new HttpEntity<UserResponse>(httpHeaders), UserResponse.class, vars);
+		ResponseEntity<UserResponse> response = restTemplate.exchange(
+				base + "/id/{id}", HttpMethod.GET,
+				new HttpEntity<UserResponse>(httpHeaders), UserResponse.class,
+				vars);
 
 		UserResponse userResponse = response.getBody();
 		assertThat(userResponse, notNullValue());
 
 		Set<String> roles = new HashSet<>();
 		roles.add(RoleEnum.USER.name());
-		UserRequest request = new UserRequest(UPDATED_USER, UPDATED_PASSWORD, UPDATED_PASSWORD, roles, createdId);
+		UserRequest request = new UserRequest(UPDATED_USER, UPDATED_PASSWORD,
+				UPDATED_PASSWORD, roles, createdId);
 
-		HttpEntity<UserRequest> entity = new HttpEntity<UserRequest>(request, httpHeaders);
+		HttpEntity<UserRequest> entity = new HttpEntity<UserRequest>(request,
+				httpHeaders);
 
 		try {
-			ResponseEntity<UserResponse> resp = restTemplate.exchange(base.toString(), HttpMethod.PUT, entity,
+			ResponseEntity<UserResponse> resp = restTemplate.exchange(
+					base.toString(), HttpMethod.PUT, entity,
 					UserResponse.class);
 
 			userResponse = resp.getBody();
 			assertThat(userResponse, notNullValue());
 			assertThat(userResponse.getName(), equalTo(UPDATED_USER));
 			assertThat(userResponse.getRoles().size(), equalTo(1));
-			assertThat(userResponse.getRoles().iterator().next(), equalTo("USER"));
+			assertThat(userResponse.getRoles().iterator().next(),
+					equalTo("USER"));
 			assertThat(response.getStatusCode(), equalTo(HttpStatus.OK));
 
 		} catch (Exception e) {
@@ -221,8 +234,10 @@ public class UserControllerTest {
 		vars.put("id", createdId);
 
 		try {
-			ResponseEntity<UserResponse> resp = restTemplate.exchange(base + "/{id}", HttpMethod.DELETE,
-					new HttpEntity<UserResponse>(httpHeaders), UserResponse.class, vars);
+			ResponseEntity<UserResponse> resp = restTemplate.exchange(
+					base + "/{id}", HttpMethod.DELETE,
+					new HttpEntity<UserResponse>(httpHeaders),
+					UserResponse.class, vars);
 
 			UserResponse userResponse = resp.getBody();
 			assertThat(userResponse, nullValue());

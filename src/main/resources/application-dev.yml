@@ -3,7 +3,7 @@ server:
 
 spring:
     profiles:
-        active: qa
+        active: dev
         
 # DataSource settings: set here configurations for the database connection
     datasource:
@@ -32,7 +32,7 @@ spring:
 # LIQUIBASE (LiquibaseProperties)
 liquibase:
   change-log: classpath:config/liquibase/master.xml
-  contexts: qa
+  contexts: dev
   drop-first: false
 
 #Logging parameters

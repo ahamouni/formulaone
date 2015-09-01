@@ -30,7 +30,6 @@ import com.formulaone.controller.dto.security.UserResponse;
 import com.formulaone.controller.exceptions.UserNotFoundException;
 import com.formulaone.domain.security.UserCredentials;
 import com.formulaone.repository.security.UserRepository;
-import com.formulaone.service.security.UserManagementServiceImpl;
 
 @RunWith(MockitoJUnitRunner.class)
 public class UserManagementServiceTest {

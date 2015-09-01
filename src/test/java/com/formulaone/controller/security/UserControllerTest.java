@@ -34,7 +34,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.formulaone.controller.dto.security.UserRequest;
 import com.formulaone.controller.dto.security.UserResponse;
 import com.formulaone.controller.dto.security.validation.UserCreationFormValidator;
-import com.formulaone.controller.security.UserController;
 import com.formulaone.service.security.UserManagementService;
 
 @RunWith(MockitoJUnitRunner.class)

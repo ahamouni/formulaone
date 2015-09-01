@@ -1,46 +1,42 @@
 server:
     port: 8080
 
-#Spring profile
 spring:
     profiles:
         active: prod
         
-        
 # DataSource settings: set here configurations for the database connection
     datasource:
-       driver-class-name: org.postgresql.Driver
-       url: jdbc:postgresql://localhost:5432/formulaone
-       databaseName: formulaone
-       serverName: localhost
-       username: postgres
-       password: postgres
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/formulaone
+        schema: formulaone
+        username: postgres
+        password: postgres
 
     jpa:
         database-platform: org.hibernate.dialect.PostgreSQL82Dialect
         database: POSTGRESQL
         openInView: false
-        show_sql: false
+        show_sql: true
         generate-ddl: false
         hibernate:
-            ddl-auto: update
-            naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
+          ddl-auto: none  
+          naming-strategy: org.hibernate.cfg.EJB3NamingStrategy
         properties:
-            hibernate.cache.use_second_level_cache: false
-            hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: false
-     
-     
+          hibernate.cache.use_second_level_cache: false
+          hibernate.cache.use_query_cache: false
+          hibernate.generate_statistics: true
+          
+        
+
 # LIQUIBASE (LiquibaseProperties)
 liquibase:
- liquibase:
   change-log: classpath:config/liquibase/master.xml
   contexts: prod
   drop-first: false
 
-
-#Logging oarameters       
+#Logging parameters
 logging:
-  file: formulaone.log
-  path: c:/logs       
- 
+  path: c:/logs
+  file: formulaone.log 
+

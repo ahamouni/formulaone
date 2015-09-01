@@ -10,11 +10,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
-import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.formulaone.FormulaOneApplication;
 import com.formulaone.controller.dto.merchant.Address;
@@ -24,9 +22,9 @@ import com.formulaone.controller.dto.merchant.General;
 import com.formulaone.controller.dto.merchant.MerchantRequest;
 import com.formulaone.controller.dto.merchant.MerchantResponse;
 import com.formulaone.controller.dto.merchant.OwnershipDetails;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FormulaOneApplication.class)
-@ActiveProfiles("qa")
 @WebAppConfiguration
 @IntegrationTest("server.port:0")
 public class ReqRespSerialDeserialTest {
