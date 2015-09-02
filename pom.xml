@@ -202,6 +202,10 @@
 				spring-boot-starter-cloud-connectors
 			</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>commons-dbcp</groupId>
+			<artifactId>commons-dbcp</artifactId>
+		</dependency>
 	</dependencies>
 
 	<build>
