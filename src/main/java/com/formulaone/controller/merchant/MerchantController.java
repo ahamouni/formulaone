@@ -1,6 +1,7 @@
 package com.formulaone.controller.merchant;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -47,6 +48,26 @@ public class MerchantController {
 		binder.addValidators(merchantValidator);
 	}
 
+	
+	/**
+	 * Just to test that the deployment, specially to heroku,
+	 * is done correctly. TO BE Removed!
+	 */
+
+	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = { "application/json",
+			"application/xml" })
+	@ResponseStatus(HttpStatus.OK)
+	@PreAuthorize("hasRole('USER')")
+	public List<MerchantResponse> findCompany() {
+		logger.info("Entering the controller with GET method - retrieving all merchants");
+		List<MerchantResponse> findall = merchantService.findall();
+		if(findall != null && !findall.isEmpty()) {
+			findall =  Arrays.asList(findall.get(0)); 
+		}
+		
+		return findall;
+	}
+
 	/**
 	 * Create new Merchant
 	 * 
@@ -87,7 +108,7 @@ public class MerchantController {
 	@ApiResponses(value = { @ApiResponse(code = 400, message = "Fields are with validation errors"),
 			@ApiResponse(code = 201, message = "Success") })
 
-	@PreAuthorize("hasRole('ADMIN')")
+	@PreAuthorize("hasRole('USER')")
 	public List<MerchantResponse> findAllCompanies() {
 		logger.info("Entering the controller with GET method - retrieving all merchants");
 		return merchantService.findall();

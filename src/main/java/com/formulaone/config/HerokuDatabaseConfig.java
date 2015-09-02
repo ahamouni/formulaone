@@ -40,7 +40,6 @@ public class HerokuDatabaseConfig implements EnvironmentAware {
 
 		String herokuUrl = env.getProperty(HEROKU_DATABASE_UR);
 		if (herokuUrl != null) {
-			
 			log.info("Using Heroku database url (" + herokuUrl
 					+ ")  to use it with JDBC");
 
@@ -58,8 +57,6 @@ public class HerokuDatabaseConfig implements EnvironmentAware {
 			String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':'
 					+ String.valueOf(dbUri.getPort()) + dbUri.getPath()
 					+ "?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
-
-			log.info("DBURL is: " + dbUrl);
 
 			BasicDataSource basicDataSource = new BasicDataSource();
 			basicDataSource.setUrl(dbUrl);
