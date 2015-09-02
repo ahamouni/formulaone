@@ -36,7 +36,7 @@ liquibase:
   drop-first: false
 
 #Logging parameters
-logging:
-  path: c:/logs
-  file: formulaone.log 
+#logging:
+#  path: c:/logs
+#  file: formulaone.log 
 
