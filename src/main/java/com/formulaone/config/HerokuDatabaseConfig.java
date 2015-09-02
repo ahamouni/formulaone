@@ -11,6 +11,8 @@ import org.springframework.boot.bind.RelaxedPropertyResolver;
 import org.springframework.context.ApplicationContextException;
 import org.springframework.context.EnvironmentAware;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.env.Environment;
 
 import com.zaxxer.hikari.HikariConfig;
@@ -19,7 +21,8 @@ import com.zaxxer.hikari.HikariDataSource;
 /**
  * Database configuration for Heroku
  */
-
+@Configuration
+@Profile(Constants.SPRING_PROFILE_HEROKU)
 public class HerokuDatabaseConfig implements EnvironmentAware {
 
 	private final Logger log = LoggerFactory
