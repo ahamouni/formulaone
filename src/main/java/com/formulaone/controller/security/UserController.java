@@ -80,7 +80,7 @@ public class UserController {
 
 	/**
 	 * 
-	 * @param id
+	 * @param namme
 	 * @return
 	 */
 	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET, consumes = { "application/json" }, produces = {

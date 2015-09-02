@@ -23,7 +23,6 @@
 		<java.version>1.8</java.version>
 		<joda-time-hibernate.version>1.4</joda-time-hibernate.version>
 		<joda-money-version>0.10.0</joda-money-version>
-
 		<usertype-core.version>4.0.0.GA</usertype-core.version>
 	</properties>
 
@@ -120,8 +119,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-
-
 		<dependency>
 			<groupId>org.opensaml</groupId>
 			<artifactId>openws</artifactId>
@@ -185,8 +182,16 @@
 			<artifactId>usertype.core</artifactId>
 			<version>${usertype-core.version}</version>
 		</dependency>
-
-
+		<dependency>
+			<groupId>com.zaxxer</groupId>
+			<artifactId>HikariCP</artifactId>
+			<exclusions>
+				<exclusion>
+					<artifactId>tools</artifactId>
+					<groupId>com.sun</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-gemfire</artifactId>

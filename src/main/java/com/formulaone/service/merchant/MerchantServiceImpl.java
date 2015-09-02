@@ -1,5 +1,8 @@
 package com.formulaone.service.merchant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +33,21 @@ public class MerchantServiceImpl implements MerchantService {
 		merchantResponse.setCompanyName(merchant.getName());
 		return merchantResponse;
 
+	}
+
+	@Override
+	public List<MerchantResponse> findall() {
+		List<Merchant> merchants = this.repository.findAll();
+		
+		List<MerchantResponse> allMerchants = new ArrayList<>();
+		for(Merchant merchant : merchants) {
+			MerchantResponse resp = new MerchantResponse();
+			resp.setCompanyName(merchant.getName());
+			resp.setRequestId(merchant.getId());
+			allMerchants.add(resp);
+		}
+		
+		return allMerchants;
 	}
 
 }

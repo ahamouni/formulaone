@@ -6,12 +6,16 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -27,10 +31,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.codec.Base64;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
+import org.springframework.web.client.RestClientException;
 
 import com.formulaone.FormulaOneApplication;
+import com.formulaone.config.Constants;
 import com.formulaone.controller.dto.merchant.MerchantRequest;
 import com.formulaone.controller.dto.merchant.MerchantResponse;
 import com.formulaone.domain.security.RoleEnum;
@@ -40,6 +47,7 @@ import com.formulaone.domain.security.RoleEnum;
 @WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @IntegrationTest("server.port:0")
+@ActiveProfiles(Constants.SPRING_PROFILE_DEVELOPMENT)
 
 /**
  * Integration tests for MerchantController rest service Note: for testing
@@ -50,6 +58,8 @@ import com.formulaone.domain.security.RoleEnum;
 public class MerchantControllerTest {
 	private static final String ADMIN_USER = "admin";
 	private static final String ADMIN_PWD = "secret";
+	
+	//TODO Complete all tests!!
 
 	@Autowired
 	private TestRestTemplate restTemplate;
@@ -68,15 +78,15 @@ public class MerchantControllerTest {
 	}
 
 	/**
-	 * Test User creation
+	 * Test successful merchant creation
 	 */
 	@Test
-	public void test_1_SuccessfulUserCredentialCreation() {
+	public void test_1_SuccessfulMerchantCreation() {
 
 		Set<String> roles = new HashSet<>();
 		roles.add(RoleEnum.USER.name());
 		MerchantRequest request = new MerchantRequest();
-		request.setName("MyCieII");
+		request.setName("MyCieIII");
 		request.setLegalName("MyCie II LLc.");
 		HttpEntity<MerchantRequest> entity = new HttpEntity<MerchantRequest>(
 				request, httpHeaders);
@@ -93,6 +103,27 @@ public class MerchantControllerTest {
 		} catch (Exception e) {
 			fail("Unexpected exception happened: " + e.getMessage());
 
+		}
+	}
+
+	/**
+	 * test successful all mnerchants retrieval
+	 */
+	@Test
+	public void test_3_SuccessfulAllMerchantsRetrieval() {
+		try {
+			ResponseEntity<ArrayList> response = restTemplate.exchange(
+					base + "", HttpMethod.GET,
+					new HttpEntity<List<MerchantResponse>>(httpHeaders),
+					ArrayList.class);
+
+			assertThat(response, notNullValue());
+			assertThat(response.getBody(), notNullValue());
+			Map<String,String> map = (Map<String, String>) response.getBody().get(0);
+			System.out.println("Merchant: " + map.get("companyName"));
+
+		} catch (RestClientException e) {
+			fail("Unexpected exception happened: " + e.getMessage());
 		}
 	}
 

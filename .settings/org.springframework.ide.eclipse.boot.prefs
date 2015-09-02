@@ -1,2 +1,2 @@
 eclipse.preferences.version=1
-spring.boot.launch.profile.history=prod;dev;cloud;duolc;vedq;qa;local;d;
+spring.boot.launch.profile.history=dev;prod;cloud;duolc;vedq;qa;local;d;

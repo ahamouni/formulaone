@@ -32,6 +32,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.codec.Base64;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestClientException;
@@ -40,12 +41,15 @@ import com.formulaone.FormulaOneApplication;
 import com.formulaone.controller.dto.security.UserRequest;
 import com.formulaone.controller.dto.security.UserResponse;
 import com.formulaone.domain.security.RoleEnum;
+import com.formulaone.config.Constants;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FormulaOneApplication.class)
 @WebAppConfiguration
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @IntegrationTest("server.port:0")
+@ActiveProfiles(Constants.SPRING_PROFILE_DEVELOPMENT)
 
 /**
  * Integration tests for UserController rest service Note: for testing purpose,

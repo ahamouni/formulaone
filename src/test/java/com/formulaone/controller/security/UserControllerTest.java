@@ -76,7 +76,7 @@ public class UserControllerTest {
 			}
 		});
 
-		mockMvc.perform(post("/demo/user")
+		mockMvc.perform(post("/formulaone/user")
 	    .contentType(APPLICATION_JSON_UTF8)
 		.content(new ObjectMapper()
 		.writeValueAsBytes(userRequest)))

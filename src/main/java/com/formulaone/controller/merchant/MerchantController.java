@@ -1,5 +1,8 @@
 package com.formulaone.controller.merchant;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -71,5 +74,24 @@ public class MerchantController {
 			throw e;
 		}
 	}
+	
+	/**
+	 * Retrieve all registered merchants
+	 */
+
+	@RequestMapping(method = RequestMethod.GET, produces = { "application/json",
+			"application/xml" })
+	@ResponseStatus(HttpStatus.OK)
+	@ApiOperation(value = "Return all boarded merchants", notes = "Values are returned in List",
+	          response = ArrayList.class)
+	@ApiResponses(value = { @ApiResponse(code = 400, message = "Fields are with validation errors"),
+			@ApiResponse(code = 201, message = "Success") })
+
+	@PreAuthorize("hasRole('ADMIN')")
+	public List<MerchantResponse> findAllCompanies() {
+		logger.info("Entering the controller with GET method - retrieving all merchants");
+		return merchantService.findall();
+	}
+
 
 }
