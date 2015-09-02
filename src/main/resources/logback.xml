@@ -27,7 +27,7 @@
     </appender>
 -->
 
-    <logger name="com.formulaone" level="DEBUG"/>
+    <logger name="com.formulaone" level="INFO"/>
 
     <logger name="javax.activation" level="WARN"/>
     <logger name="javax.mail" level="WARN"/>
@@ -44,8 +44,8 @@
     <logger name="org.hibernate.validator" level="WARN"/>
     <logger name="org.hibernate" level="WARN"/>
     <logger name="org.hibernate.ejb.HibernatePersistence" level="OFF"/>
-    <logger name="org.springframework" level="DEBUG"/>
-    <logger name="org.springframework.web" level="DEBUG"/>
+    <logger name="org.springframework" level="WARN"/>
+    <logger name="org.springframework.web" level="WARN"/>
     <logger name="org.springframework.security" level="WARN"/>
     <logger name="org.springframework.cache" level="WARN"/>
     <logger name="org.thymeleaf" level="WARN"/>
@@ -60,7 +60,7 @@
         <resetJUL>true</resetJUL>
     </contextListener>
 
-    <root level="DEBUG">
+    <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>
 
