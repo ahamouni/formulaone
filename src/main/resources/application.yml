@@ -1,0 +1,8 @@
+swagger:
+    title: FormulaOne APIs
+    description: FormulaOne Merchants Boarding APIs
+    termsOfServiceUrl: http://formulaone_termofservice_url.com
+    version: 1.0.0
+    contact: http://emailcontact@contact.com
+    license: license type
+    licenseUrl: http://licence_url.com

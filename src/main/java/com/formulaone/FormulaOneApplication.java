@@ -7,10 +7,10 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import javax.annotation.PostConstruct;
-import javax.inject.Inject;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.TestRestTemplate;
@@ -25,15 +25,13 @@ import com.fasterxml.jackson.datatype.joda.JodaModule;
 import com.formulaone.client.CustomResponseErrorHandler;
 import com.formulaone.config.Constants;
 import com.google.common.base.Joiner;
-import com.mangofactory.swagger.plugin.EnableSwagger;
 
 @SpringBootApplication
-@EnableSwagger // auto generation of API docs
 public class FormulaOneApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(FormulaOneApplication.class);
 
-	@Inject
+	@Autowired
 	private Environment env;
 
 	/**

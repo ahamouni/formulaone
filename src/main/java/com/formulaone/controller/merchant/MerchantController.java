@@ -1,6 +1,5 @@
 package com.formulaone.controller.merchant;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -24,14 +23,15 @@ import com.formulaone.controller.dto.merchant.MerchantRequest;
 import com.formulaone.controller.dto.merchant.MerchantResponse;
 import com.formulaone.controller.dto.merchant.validation.MerchantValidator;
 import com.formulaone.service.merchant.MerchantService;
-import com.wordnik.swagger.annotations.Api;
-import com.wordnik.swagger.annotations.ApiOperation;
-import com.wordnik.swagger.annotations.ApiParam;
-import com.wordnik.swagger.annotations.ApiResponse;
-import com.wordnik.swagger.annotations.ApiResponses;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.ApiResponse;
+import io.swagger.annotations.ApiResponses;
 
 @RestController
-@Api(basePath = "/formulaone/merchant", value = "formulaone", description = "Merchant Boarding APIs")
+@Api(produces = "application/json; charset=UTF-8")
 @RequestMapping(value = "/formulaone/merchant", produces = MediaType.APPLICATION_JSON_VALUE)
 public class MerchantController {
 
@@ -48,23 +48,23 @@ public class MerchantController {
 		binder.addValidators(merchantValidator);
 	}
 
-	
 	/**
-	 * Just to test that the deployment, specially to heroku,
-	 * is done correctly. TO BE Removed!
+	 * Just to test that the deployment, specially to heroku, is done correctly.
+	 * TO BE Removed!
 	 */
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = { "application/json",
-			"application/xml" })
+	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = {
+			"application/json", "application/xml" })
 	@ResponseStatus(HttpStatus.OK)
 	@PreAuthorize("hasRole('USER')")
 	public List<MerchantResponse> findCompany() {
-		logger.info("Entering the controller with GET method - retrieving all merchants");
+		logger.info(
+				"Entering the controller with GET method - retrieving all merchants");
 		List<MerchantResponse> findall = merchantService.findall();
-		if(findall != null && !findall.isEmpty()) {
-			findall =  Arrays.asList(findall.get(0)); 
+		if (findall != null && !findall.isEmpty()) {
+			findall = Arrays.asList(findall.get(0));
 		}
-		
+
 		return findall;
 	}
 
@@ -77,16 +77,18 @@ public class MerchantController {
 	@RequestMapping(method = RequestMethod.POST, consumes = {
 			"application/json" }, produces = {
 					"application/json; charset=UTF-8" })
-	@ApiOperation(value = "Create new Merchant", notes = "", response = MerchantResponse.class)
+	@ApiOperation(httpMethod = "POST", value = "Boarding new merchant", notes = "The merchant is Id verified before processing the payment.", response = MerchantResponse.class)
 	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successful merchant boarding", response = MerchantResponse.class),
 			@ApiResponse(code = 400, message = "Fields are with validation errors"),
-			@ApiResponse(code = 201, message = "Success") })
+			@ApiResponse(code = 500, message = "Internal server error") })
 	@PreAuthorize("hasRole('USER')")
 	@ResponseStatus(HttpStatus.CREATED)
 	public MerchantResponse createMerchant(
-			@ApiParam(value = "MerchantRequest instance", required = true) @RequestBody @Valid final MerchantRequest request) {
+			@ApiParam(name = "merchantRequest", value = "Merchant information", required = true) @RequestBody @Valid final MerchantRequest request) {
 		try {
-			logger.debug("Entering the Merchant controller with POST(create) method");
+			logger.debug(
+					"Entering the Merchant controller with POST(create) method");
 			MerchantResponse response = merchantService.createMerchant(request);
 			return response;
 		} catch (Exception e) {
@@ -95,7 +97,7 @@ public class MerchantController {
 			throw e;
 		}
 	}
-	
+
 	/**
 	 * Retrieve all registered merchants
 	 */
@@ -103,16 +105,16 @@ public class MerchantController {
 	@RequestMapping(method = RequestMethod.GET, produces = { "application/json",
 			"application/xml" })
 	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(value = "Return all boarded merchants", notes = "Values are returned in List",
-	          response = ArrayList.class)
-	@ApiResponses(value = { @ApiResponse(code = 400, message = "Fields are with validation errors"),
-			@ApiResponse(code = 201, message = "Success") })
+	@ApiOperation(httpMethod = "GET", value = "Returns all boarded merchants", notes = "Returns a list of all boarded merchants", response = MerchantResponse.class, responseContainer = "List")
+	@ApiResponses(value = {
+			@ApiResponse(code = 200, message = "Successful merchant retrieval", response = MerchantResponse.class),
+			@ApiResponse(code = 500, message = "Internal server error") })
 
 	@PreAuthorize("hasRole('USER')")
 	public List<MerchantResponse> findAllCompanies() {
-		logger.info("Entering the controller with GET method - retrieving all merchants");
+		logger.info(
+				"Entering the controller with GET method - retrieving all merchants");
 		return merchantService.findall();
 	}
-
 
 }

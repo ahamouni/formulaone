@@ -72,8 +72,15 @@ public class MerchantControllerTest {
 
 	@Before
 	public void setUp() throws Exception {
+		
+		//Heroku url
 		this.base = new URL(
-				"http://localhost:" + port + "/formulaone/merchant");
+				"http://b2bformulaone.herokuapp.com/formulaone/merchant");
+	   
+		//this.base = new URL("http://localhost:" + port + "/formulaone/merchant");
+	
+		
+		System.out.println("LE PORT: " + port);
 		httpHeaders = createHeaders();
 	}
 
@@ -86,7 +93,7 @@ public class MerchantControllerTest {
 		Set<String> roles = new HashSet<>();
 		roles.add(RoleEnum.USER.name());
 		MerchantRequest request = new MerchantRequest();
-		request.setName("MyCieIII");
+		request.setName("MyCieIIII");
 		request.setLegalName("MyCie II LLc.");
 		HttpEntity<MerchantRequest> entity = new HttpEntity<MerchantRequest>(
 				request, httpHeaders);
