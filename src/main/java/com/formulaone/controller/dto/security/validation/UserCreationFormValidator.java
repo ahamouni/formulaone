@@ -37,13 +37,13 @@ public class UserCreationFormValidator implements Validator {
 
 	private void validatePasswords(Errors errors, UserRequest form) {
 		if (!form.getPassword().equals(form.getPasswordRepeated())) {
-			errors.rejectValue("passwordRepeated", "error.passwords.not_match");
+			errors.rejectValue("passwordRepeated", null, "Passwords do not match.");
 		}
 	}
 
 	private void validateNameUnique(Errors errors, UserRequest form) {
 		if (userService.getUserByName(form.getName()).isPresent()) {
-			errors.rejectValue("name", "error.name.exists");
+			errors.rejectValue("name", null, "User with the same name already exists.");
 		}
 	}
 }

@@ -15,6 +15,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.test.TestRestTemplate;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.core.env.SimpleCommandLinePropertySource;
@@ -27,6 +28,7 @@ import com.formulaone.config.Constants;
 import com.google.common.base.Joiner;
 
 @SpringBootApplication
+@ComponentScan("com.formulaone")
 public class FormulaOneApplication {
 
 	private static final Logger log = LoggerFactory.getLogger(FormulaOneApplication.class);

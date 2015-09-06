@@ -11,10 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
 
-import com.formulaone.controller.company.CompanyController;
 import com.formulaone.controller.merchant.MerchantController;
 import com.formulaone.controller.security.UserController;
-import com.google.common.base.Predicate;
 
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -26,7 +24,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @ComponentScan(basePackageClasses = {
         MerchantController.class,
-        CompanyController.class,
         UserController.class
 })
 public class SwaggerConfig implements EnvironmentAware {

@@ -1,7 +1,9 @@
 Pour utiliser Swagger:
 
-localhost:8080/api-docs  --> Jason Apis
+  --> Jason Apis
 
 Pour utiliser swagger interface
-http://localhost:8080/swagger/index.html
+
+http://localhost:8080/v2/api-docs
+http://localhost:8080/swagger-ui.html
 

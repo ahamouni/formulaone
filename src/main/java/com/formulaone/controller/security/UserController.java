@@ -96,6 +96,8 @@ public class UserController {
 		return UserDTOMapper.map(user.get());
 	}
 
+	
+	
 	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, consumes = { "application/json" }, produces = {
 			"application/json; charset=UTF-8" })
 	@PreAuthorize("hasRole('ADMIN')")

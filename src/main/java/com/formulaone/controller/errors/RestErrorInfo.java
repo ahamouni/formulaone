@@ -5,50 +5,54 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * DTO for transferring error message with a list of field errors.
+ * DTO for transferring error message.
  */
 public class RestErrorInfo implements Serializable {
 
 	private static final long serialVersionUID = -2472026446965712212L;
 
-	private final String message;
-    private final String description;
-    private List<FieldErrorDTO> fieldErrors;
-    
-    
-    RestErrorInfo(String message) {
-        this(message, null);
-    }
+	private String code = "";
+	private String status = "";
+	private List<String> errors = new ArrayList<>();
 
-    RestErrorInfo(String message, String description) {
-        this.message = message;
-        this.description = description;
-    }
+	public RestErrorInfo() {
+		super();
+	}
 
-    RestErrorInfo(String message, String description, List<FieldErrorDTO> fieldErrors) {
-        this.message = message;
-        this.description = description;
-        this.fieldErrors = fieldErrors;
-    }
+	/**
+	 * 
+	 * @param code
+	 * @param status
+	 * @param messages
+	 */
+	public RestErrorInfo(String code, String status, List<String> errors) {
+		super();
+		this.code = code;
+		this.status = status;
+		this.errors = errors;
+	}
 
-    public void add(String objectName, String field, String message) {
-        if (fieldErrors == null) {
-            fieldErrors = new ArrayList<>();
-        }
-        fieldErrors.add(new FieldErrorDTO(objectName, field, message));
-    }
+	public RestErrorInfo(String code, String status, String error) {
+		super();
+		this.code = code;
+		this.status = status;
+		this.errors.add(error);
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public List<String> getMessages() {
+		return errors;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public void setMessages(List<String> messages) {
+		this.errors = messages;
+	}
 
-    public List<FieldErrorDTO> getFieldErrors() {
-        return fieldErrors;
-    }
+	public String getCode() {
+		return code;
+	}
 
+	public String getStatus() {
+		return status;
+	}
 
 }

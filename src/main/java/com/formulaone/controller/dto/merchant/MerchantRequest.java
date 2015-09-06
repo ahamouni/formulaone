@@ -1,30 +1,53 @@
 package com.formulaone.controller.dto.merchant;
 
-import org.joda.money.Money;
+import java.math.BigDecimal;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.formulaone.jason.MoneyDeserializer;
-import com.formulaone.jason.MoneySerializer;
+import javax.validation.Valid;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.NotEmpty;
+
+import com.formulaone.domain.merchant.Merchant;
+import com.formulaone.domain.security.UserCredentials;
 
 /**
  * This DTO class represents the on boarding merchant request
  */
 public class MerchantRequest {
+
+	private Long mid;
+
+	@NotEmpty()
+	@Size(max = Merchant.MAX_LENGTH_NAME)
 	private String name;
+	
+	@NotEmpty
+	@Size(max = Merchant.MAX_LENGTH_NAME)
+	@Email
 	private String email;
+	
+	@NotEmpty
+	@Size(max = Merchant.MAX_LENGTH_NAME)
 	private String legalName;
 
 	// Optional
 	private String businessDescription;
 
 	// Optional
-	private Money averagePaymentAmount;
+	private BigDecimal averagePaymentAmount;
 
-	private Company company;
-	private OwnershipDetails ownershipDetails;
-	private BankingDetails bankingDetails;
-	private General general;
+	@Valid
+	private CompanyRequest company;
+	
+	@Valid
+	private OwnershipDetailsRequest ownershipDetails;
+	
+	@Valid
+	private BankingDetailsRequest bankingDetails;
+	
+	@Valid
+	private GeneralRequest general;
 
 	public MerchantRequest() {
 		super();
@@ -42,9 +65,10 @@ public class MerchantRequest {
 	 * @param bankingDetails
 	 * @param general
 	 */
-	public MerchantRequest(String name, String email, String legalName, String businessDescription,
-			Money averagePaymentAmount, Company company, OwnershipDetails ownershipDetails,
-			BankingDetails bankingDetails, General general) {
+	public MerchantRequest(String name, String email, String legalName,
+			String businessDescription, BigDecimal averagePaymentAmount,
+			CompanyRequest company, OwnershipDetailsRequest ownershipDetails,
+			BankingDetailsRequest bankingDetails, GeneralRequest general) {
 		super();
 		this.name = name;
 		this.email = email;
@@ -89,53 +113,60 @@ public class MerchantRequest {
 		this.businessDescription = businessDescription;
 	}
 
-	@JsonSerialize(using = MoneySerializer.class)
-	public Money getAveragePaymentAmount() {
+	public BigDecimal getAveragePaymentAmount() {
 		return averagePaymentAmount;
 	}
 
-	@JsonDeserialize(using = MoneyDeserializer.class)
-	public void setAveragePaymentAmount(Money averagePaymentAmount) {
+	public void setAveragePaymentAmount(BigDecimal averagePaymentAmount) {
 		this.averagePaymentAmount = averagePaymentAmount;
 	}
 
-	public Company getCompany() {
+	public CompanyRequest getCompany() {
 		return company;
 	}
 
-	public void setCompany(Company company) {
+	public void setCompany(CompanyRequest company) {
 		this.company = company;
 	}
 
-	public OwnershipDetails getOwnershipDetails() {
+	public OwnershipDetailsRequest getOwnershipDetails() {
 		return ownershipDetails;
 	}
 
-	public void setOwnershipDetails(OwnershipDetails ownershipDetails) {
+	public void setOwnershipDetails(OwnershipDetailsRequest ownershipDetails) {
 		this.ownershipDetails = ownershipDetails;
 	}
 
-	public BankingDetails getBankingDetails() {
+	public BankingDetailsRequest getBankingDetails() {
 		return bankingDetails;
 	}
 
-	public void setBankingDetails(BankingDetails bankingDetails) {
+	public void setBankingDetails(BankingDetailsRequest bankingDetails) {
 		this.bankingDetails = bankingDetails;
 	}
 
-	public General getGeneral() {
+	public GeneralRequest getGeneral() {
 		return general;
 	}
 
-	public void setGeneral(General general) {
+	public void setGeneral(GeneralRequest general) {
 		this.general = general;
+	}
+
+	public Long getMid() {
+		return mid;
+	}
+
+	public void setMid(Long mid) {
+		this.mid = mid;
 	}
 
 	@Override
 	public String toString() {
 		return String.format(
 				"MerchantRequest [name=%s, email=%s, legalName=%s, company=%s, ownershipDetails=%s, bankingDetails=%s, general=%s, businessDescription=%s, averagePaymentAmount=%s]",
-				name, email, legalName, company, ownershipDetails, bankingDetails, general, businessDescription,
+				name, email, legalName, company, ownershipDetails,
+				bankingDetails, general, businessDescription,
 				averagePaymentAmount);
 	}
 

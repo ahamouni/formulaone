@@ -1,19 +1,43 @@
 package com.formulaone.controller.dto.merchant;
 
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
 import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
 
-public class OwnershipDetails {
+import com.formulaone.domain.merchant.Merchant;
 
+public class OwnershipDetailsRequest {
+
+	@NotEmpty
+	@Size(max = Merchant.MAX_LENGTH_NAME)
 	private String firstName;
 	private String middleName;
+	
+	@NotEmpty
+	@Size(max = Merchant.MAX_LENGTH_NAME)
 	private String lastName;
+	
+	@Past
 	private DateTime dob;
+	
 	private String position;
+	
+	@NotEmpty
+	@Size(max = 20)
 	private String ssn;
+	
+	@NotEmpty
+	@Size(max = Merchant.MAX_LENGTH_NAME)
 	private String driverlicense;
+	
+	@NotEmpty
+	@Size(max = Merchant.MAX_LENGTH_NAME)
 	private String taxiId;
 
-	public OwnershipDetails() {
+	public OwnershipDetailsRequest() {
 		super();
 	}
 
@@ -28,7 +52,7 @@ public class OwnershipDetails {
 	 * @param driverlicense
 	 * @param taxiId
 	 */
-	public OwnershipDetails(String firstName, String middleName, String lastName, DateTime dob, String position,
+	public OwnershipDetailsRequest(String firstName, String middleName, String lastName, DateTime dob, String position,
 			String ssn, String driverlicense, String taxiId) {
 		super();
 		this.firstName = firstName;

@@ -18,9 +18,11 @@ public class MerchantResponse {
 	private String status;
 
 	private String description;
-	
-	//Merchant request identifier
+
+	// Merchant request identifier
 	private Long requestId;
+
+	private Long mid;
 
 	public MerchantResponse() {
 		super();
@@ -37,10 +39,11 @@ public class MerchantResponse {
 	 * @param description
 	 * @param requestId
 	 */
-	public MerchantResponse(String companyName, String firstName,
+	public MerchantResponse(Long mid, String companyName, String firstName,
 			String lastName, String middle, String terminalId, String status,
 			String description, Long requestId) {
 		super();
+		this.mid = mid;
 		this.companyName = companyName;
 		this.firstName = firstName;
 		this.lastName = lastName;
@@ -115,13 +118,20 @@ public class MerchantResponse {
 		this.requestId = requestId;
 	}
 
+	public Long getMid() {
+		return mid;
+	}
+
+	public void setMid(Long mid) {
+		this.mid = mid;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-				"MerchantResponse [companyName=%s, firstName=%s, lastName=%s, middle=%s, TerminalId=%s, status=%s, description=%s, requestId=%s]",
+				"MerchantResponse [companyName=%s, firstName=%s, lastName=%s, middle=%s, TerminalId=%s, status=%s, description=%s, requestId=%s, mid=%s]",
 				companyName, firstName, lastName, middle, TerminalId, status,
-				description, requestId);
+				description, requestId, mid);
 	}
 
-	
 }

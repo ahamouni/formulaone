@@ -9,6 +9,8 @@ public interface MerchantService {
 
 	public MerchantResponse createMerchant(MerchantRequest request);
 	public List<MerchantResponse> findall();
+	public void delete(Long id);
+	MerchantResponse findMerchantById(Long id);
 
 
 }

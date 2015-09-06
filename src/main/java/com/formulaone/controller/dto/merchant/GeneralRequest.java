@@ -1,6 +1,6 @@
 package com.formulaone.controller.dto.merchant;
 
-public class General {
+public class GeneralRequest {
 
 	private String countryOfIncorporation;
 	private String website;
@@ -9,7 +9,7 @@ public class General {
 	private String phoneNumber;
 	private String businessType;
 
-	public General() {
+	public GeneralRequest() {
 		super();
 	}
 
@@ -22,7 +22,7 @@ public class General {
 	 * @param phoneNumber
 	 * @param businessType
 	 */
-	public General(String countryOfIncorporation, String website,
+	public GeneralRequest(String countryOfIncorporation, String website,
 			String annualProcessing, String descriptor, String phoneNumber,
 			String businessType) {
 		super();

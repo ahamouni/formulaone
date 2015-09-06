@@ -38,10 +38,10 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.web.client.RestClientException;
 
 import com.formulaone.FormulaOneApplication;
+import com.formulaone.config.Constants;
 import com.formulaone.controller.dto.security.UserRequest;
 import com.formulaone.controller.dto.security.UserResponse;
 import com.formulaone.domain.security.RoleEnum;
-import com.formulaone.config.Constants;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -132,6 +132,7 @@ public class UserControllerTest {
 					UserResponse.class, vars);
 
 			UserResponse userResponse = response.getBody();
+			System.out.println("Body: " + userResponse);
 			assertThat(userResponse, notNullValue());
 			assertThat(userResponse.getName(), equalTo(CREATED_USER));
 			assertThat(userResponse.getRoles().size(), equalTo(2));
