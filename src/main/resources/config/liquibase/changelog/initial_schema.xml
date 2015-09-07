@@ -71,20 +71,7 @@
 			referencedColumnNames="id" referencedTableName="user_credentials" />
 
 
-		<loadData encoding="UTF-8" file="config/liquibase/roles.csv"
-			separator=";" tableName="role" />
 
-		<loadData encoding="UTF-8" file="config/liquibase/users.csv"
-			separator=";" tableName="user_credentials">
-			<column name="created_date" type="timestamp" />
-		</loadData>
-
-		<dropDefaultValue tableName="user_credentials"
-			columnName="created_date" columnDataType="datetime" />
-
-
-		<loadData encoding="UTF-8" file="config/liquibase/users_roles.csv"
-			separator=";" tableName="user_roles" />
 
 		<!-- Creating Merchant table -->
 		<createTable tableName="merchant">
@@ -93,7 +80,7 @@
 			</column>
 
 			<column name="mid" type="bigint">
-				<constraints  unique="true" nullable="false" />
+				<constraints unique="true" nullable="false" />
 			</column>
 
 			<column name="requestid" type="bigint">
@@ -323,6 +310,22 @@
 			tableName="ownershipdetails" unique="true">
 			<column name="bankingdetails_id" type="bigint" />
 		</createIndex>
+
+<!--  Base prov. user_credentials and roles tables -->
+		<loadData encoding="UTF-8" file="config/liquibase/roles.csv"
+			separator=";" tableName="role" />
+
+		<loadData encoding="UTF-8" file="config/liquibase/users.csv"
+			separator=";" tableName="user_credentials">
+			<column name="created_date" type="timestamp" />
+		</loadData>
+
+		<dropDefaultValue tableName="user_credentials"
+			columnName="created_date" columnDataType="datetime" />
+
+
+		<loadData encoding="UTF-8" file="config/liquibase/users_roles.csv"
+			separator=";" tableName="user_roles" />
 
 
 

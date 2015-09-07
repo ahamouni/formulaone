@@ -95,6 +95,7 @@ public class MerchantControllerTest {
 
 		this.base = new URL(
 				"http://localhost:" + port + "/formulaone/merchant");
+			//	"http://b2bformulaone.herokuapp.com/formulaone/merchant");
 		System.out.println("LE PORT: " + port);
 		httpHeaders = createHeaders();
 	}
@@ -216,6 +217,7 @@ public class MerchantControllerTest {
 	 * Test successful user deletion
 	 */
 	@Test
+	@Ignore
 	public void test_4_SuccessMerchantDeletion() {
 		Map<String, Long> vars = new HashMap<String, Long>();
 		vars.put("id", createdId);

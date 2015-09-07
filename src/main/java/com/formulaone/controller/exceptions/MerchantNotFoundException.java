@@ -15,7 +15,7 @@ public class MerchantNotFoundException extends EntityNotFoundException {
 	}
 
 	protected String getSpecificMessage() {
-		return ("Merchant with the id=%s was not found");
+		return (String.format("Merchant with the id=%s was not found", this.getId()));
 	}
 
 }

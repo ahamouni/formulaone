@@ -1,6 +1,5 @@
 package com.formulaone.controller.merchant;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -39,35 +38,13 @@ public class MerchantController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	/**
-	 * Just to test that the deployment, specially to heroku, is done correctly.
-	 * TO BE Removed!
-	 */
-
-	@RequestMapping(value = "/test", method = RequestMethod.GET, produces = {
-			"application/json", "application/xml" })
-	@ResponseStatus(HttpStatus.OK)
-	@PreAuthorize("hasRole('USER')")
-	public List<MerchantResponse> findCompany() {
-		logger.info(
-				"Entering the controller with GET method - retrieving all merchants");
-		List<MerchantResponse> findall = merchantService.findall();
-		if (findall != null && !findall.isEmpty()) {
-			findall = Arrays.asList(findall.get(0));
-		}
-
-		return findall;
-	}
-
-	/**
 	 * Create new Merchant
 	 * 
 	 * @param request
 	 * @return
 	 */
-	@RequestMapping(method = RequestMethod.POST, consumes = {
-			"application/json" }, produces = {
-					"application/json; charset=UTF-8" })
-	@ApiOperation(httpMethod = "POST", value = "Boarding new merchant", notes = "The merchant is Id verified before processing the payment.", response = MerchantResponse.class)
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(httpMethod = "POST", value = "Boarding new merchant", notes = "The merchant is Id verified before it is boarded.", response = MerchantResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 201, message = "Successful merchant boarding", response = MerchantResponse.class),
 			@ApiResponse(code = 400, message = "Fields are with validation errors"),
@@ -87,9 +64,8 @@ public class MerchantController {
 	 * Retrieve all registered merchants
 	 */
 
-	@RequestMapping(method = RequestMethod.GET, produces = { "application/json",
-			"application/xml" })
-	@ApiOperation(httpMethod = "GET", value = "Returns all boarded merchants", notes = "Returns a list of all boarded merchants", response = MerchantResponse.class, responseContainer = "List")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@ApiOperation(httpMethod = "GET", value = "Retrieve all boarded merchants", notes = "Retrieved merchants are returned in the List", response = MerchantResponse.class, responseContainer = "List")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful merchant retrieval", response = MerchantResponse.class),
 			@ApiResponse(code = 500, message = "Internal server error") })
@@ -106,10 +82,9 @@ public class MerchantController {
 	 * Retrieve Merchant with the specified merchant Id
 	 */
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = {
-			"application/json", "application/xml" })
+	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(httpMethod = "GET", value = "Merchant retrieval", notes = "Retrieve merchant with the specified id", response = MerchantResponse.class)
+	@ApiOperation(httpMethod = "GET", value = "Retrieve merchant by his Id", notes = "", response = MerchantResponse.class)
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful merchant retrieval", response = MerchantResponse.class),
 			@ApiResponse(code = 404, message = "Merchant not found"),
@@ -126,10 +101,9 @@ public class MerchantController {
 	 * Delete Merchant with the specified merchant Id
 	 */
 
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = {
-			"application/json", "application/xml" })
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
-	@ApiOperation(httpMethod = "DELETE", value = "Delete merchant", notes = "Delete merchant with the specified id")
+	@ApiOperation(httpMethod = "DELETE", value = "Delete merchant with the specified Id", notes = "Delete merchant with the specified id")
 	@ApiResponses(value = {
 			@ApiResponse(code = 200, message = "Successful merchant deletion", response = MerchantResponse.class),
 			@ApiResponse(code = 404, message = "Merchant not found"),

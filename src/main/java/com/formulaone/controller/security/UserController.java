@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.formulaone.controller.dto.security.UserRequest;
 import com.formulaone.controller.dto.security.UserResponse;
 import com.formulaone.controller.dto.security.validation.UserCreationFormValidator;
+import com.formulaone.controller.exceptions.UserNotFoundException;
 import com.formulaone.domain.security.UserCredentials;
 import com.formulaone.service.security.UserDTOMapper;
 import com.formulaone.service.security.UserManagementService;
@@ -37,7 +38,8 @@ public class UserController {
 	private final UserCreationFormValidator userCreationValidator;
 
 	@Autowired
-	public UserController(UserManagementService userService, UserCreationFormValidator userCreationFormValidator) {
+	public UserController(UserManagementService userService,
+			UserCreationFormValidator userCreationFormValidator) {
 		this.userService = userService;
 		this.userCreationValidator = userCreationFormValidator;
 	}
@@ -48,14 +50,14 @@ public class UserController {
 	}
 
 	/**
+	 * Create new User
 	 * 
 	 * @param form
 	 * @param bindingResult
 	 * @return
 	 */
 
-	@RequestMapping(method = RequestMethod.POST, consumes = { "application/json" }, produces = {
-			"application/json; charset=UTF-8" })
+	@RequestMapping(method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.CREATED)
 	public UserResponse create(@RequestBody @Valid UserRequest request) {
@@ -64,42 +66,48 @@ public class UserController {
 	}
 
 	/**
+	 * Retrieve user by Id
 	 * 
 	 * @param id
 	 * @return
 	 */
-	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET, consumes = { "application/json" }, produces = {
-			"application/json; charset=UTF-8" })
+	@RequestMapping(value = "/id/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.OK)
 	public UserResponse findUserById(@PathVariable(value = "id") Long id) {
-		logger.debug("Finding user entry with id: {}", id);
+		logger.debug("Finding user entry with id: {}" + id);
 		UserCredentials user = userService.getUserById(id);
 		return UserDTOMapper.map(user);
 	}
 
 	/**
+	 * Retrieve User by Name
 	 * 
 	 * @param namme
 	 * @return
 	 */
-	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET, consumes = { "application/json" }, produces = {
-			"application/json; charset=UTF-8" })
+	@RequestMapping(value = "/name/{name}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.OK)
-	public UserResponse findUserByName(@PathVariable(value = "name") String name) {
+	public UserResponse findUserByName(
+			@PathVariable(value = "name") String name) {
 		logger.debug("Finding user entry with name: {}", name);
 		Optional<UserCredentials> user = userService.getUserByName(name);
-		logger.debug("Found user entry with information: {}", user);
+		if (!user.isPresent()) {
+			throw new UserNotFoundException(name);
+		}
 
+		logger.debug("Found user entry with information: {}", user);
 		// Validation already done in Service layer
 		return UserDTOMapper.map(user.get());
 	}
 
-	
-	
-	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, consumes = { "application/json" }, produces = {
-			"application/json; charset=UTF-8" })
+	/**
+	 * Delete user
+	 * 
+	 * @param id
+	 */
+	@RequestMapping(value = "{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.NO_CONTENT)
 	public void delete(@PathVariable("id") Long id) {
@@ -107,8 +115,8 @@ public class UserController {
 		userService.delete(id);
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, consumes = { "application/json" }, produces = {
-			"application/json; charset=UTF-8" })
+	@RequestMapping(method = RequestMethod.PUT, consumes = {
+			"application/json" }, produces = { "application/json" })
 	@PreAuthorize("hasRole('ADMIN')")
 	@ResponseStatus(HttpStatus.OK)
 	public UserResponse update(@RequestBody @Valid UserRequest request) {
@@ -117,11 +125,12 @@ public class UserController {
 	}
 
 	/**
+	 * Retrieve all Users
 	 * 
 	 * @return
 	 */
 	@PreAuthorize("hasRole('ADMIN')")
-	@RequestMapping(method = RequestMethod.GET, produces = { "application/json; charset=UTF-8", "application/xml" })
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	public List<UserResponse> getAllUsers() {
 		logger.debug("Finding all users: {}");
