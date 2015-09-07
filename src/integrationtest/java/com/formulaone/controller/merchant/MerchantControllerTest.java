@@ -129,7 +129,7 @@ public class MerchantControllerTest {
 
 			assertThat(response.getStatusCode(), equalTo(HttpStatus.CREATED));
 
-			createdId = merchantResponse.getMid();
+			createdId = merchantResponse.getId();
 
 		} catch (Exception e) {
 			fail("Unexpected exception happened: " + e.getMessage());
@@ -218,7 +218,7 @@ public class MerchantControllerTest {
 	@Test
 	public void test_4_SuccessMerchantDeletion() {
 		Map<String, Long> vars = new HashMap<String, Long>();
-		vars.put("id", 1000l);
+		vars.put("id", createdId);
 
 		try {
 			ResponseEntity<String> resp = restTemplate.exchange(base + "/{id}",

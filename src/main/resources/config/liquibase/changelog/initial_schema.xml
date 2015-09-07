@@ -19,7 +19,7 @@
 	<!-- Formulaone core tables. The initial schema has the '00000000000001' 
 		id, so that it is over-written if we re-generate it. -->
 	<changeSet id="00000000000001" author="ilsatech">
-	
+
 		<createTable tableName="user_credentials">
 			<column name="id" type="bigint" autoIncrement="${autoIncrement}">
 				<constraints primaryKey="true" nullable="false" />
@@ -88,8 +88,12 @@
 
 		<!-- Creating Merchant table -->
 		<createTable tableName="merchant">
-			<column name="mid" type="bigint">
+			<column name="id" type="bigint" autoIncrement="${autoIncrement}">
 				<constraints primaryKey="true" nullable="false" />
+			</column>
+
+			<column name="mid" type="bigint">
+				<constraints  unique="true" nullable="false" />
 			</column>
 
 			<column name="requestid" type="bigint">

@@ -1,9 +1,11 @@
 package com.formulaone.controller.dto.merchant;
 
 /**
- * This DTO class represents the on merchant onboarding status
+ * This DTO class represents the boarding merchant status
  */
 public class MerchantResponse {
+
+	private Long id;
 
 	private String companyName;
 
@@ -39,10 +41,11 @@ public class MerchantResponse {
 	 * @param description
 	 * @param requestId
 	 */
-	public MerchantResponse(Long mid, String companyName, String firstName,
+	public MerchantResponse(Long id, Long mid, String companyName, String firstName,
 			String lastName, String middle, String terminalId, String status,
 			String description, Long requestId) {
 		super();
+		this.id = id;
 		this.mid = mid;
 		this.companyName = companyName;
 		this.firstName = firstName;
@@ -126,12 +129,20 @@ public class MerchantResponse {
 		this.mid = mid;
 	}
 
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-				"MerchantResponse [companyName=%s, firstName=%s, lastName=%s, middle=%s, TerminalId=%s, status=%s, description=%s, requestId=%s, mid=%s]",
-				companyName, firstName, lastName, middle, TerminalId, status,
-				description, requestId, mid);
+				"MerchantResponse [id=%s, companyName=%s, firstName=%s, lastName=%s, middle=%s, TerminalId=%s, status=%s, description=%s, requestId=%s, mid=%s]",
+				id, companyName, firstName, lastName, middle, TerminalId,
+				status, description, requestId, mid);
 	}
 
 }

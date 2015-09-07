@@ -25,7 +25,7 @@ public class MerchantDTOMapper {
 	}
 
 	public static MerchantResponse map(Merchant merchant) {
-		return new MerchantResponse(merchant.getMid(),
+		return new MerchantResponse(merchant.getId(), merchant.getMid(),
 				merchant.getCompanyDetails().getName(),
 				merchant.getOwnershipDetails().getFirstName(),
 				merchant.getOwnershipDetails().getLastName(),

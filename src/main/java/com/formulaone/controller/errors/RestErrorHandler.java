@@ -49,7 +49,8 @@ public class RestErrorHandler {
 	@ResponseStatus(HttpStatus.NOT_FOUND)
 	@ResponseBody
 	public RestErrorInfo handleEntityNotFound(EntityNotFoundException ex) {
-		log.info("Processing EntityNotFoundException ...");
+		log.debug("Processing EntityNotFoundException ...");
+		log.error("Exception happened while processing request", ex);
 		return new RestErrorInfo("", ErrorConstants.ERR_ENTITY_NOT_FOUND,
 				ex.getErrorMessage());
 	}
@@ -60,6 +61,7 @@ public class RestErrorHandler {
 	public RestErrorInfo handleMethodNotAllowed(
 			HttpRequestMethodNotSupportedException ex) {
 		log.debug("Processing HttpRequestMethodNotSupportedException ...");
+		log.error("Exception happened while processing request", ex);
 		return new RestErrorInfo("", ErrorConstants.ERR_METHOD_NOT_SUPPORTED,
 				ex.getMessage());
 
@@ -70,6 +72,7 @@ public class RestErrorHandler {
 	@ResponseBody
 	public RestErrorInfo handleNotAuthorized(ClientAbortException ex) {
 		log.debug("Processing ClientAbortException ...");
+		log.error("Exception happened while processing request", ex);
 		return new RestErrorInfo("", ErrorConstants.ERR_ACCESS_DENIED,
 				"Credentials not correct.");
 
@@ -81,6 +84,7 @@ public class RestErrorHandler {
 	public RestErrorInfo handleConstraintViolation(
 			ConstraintViolationException ex) {
 		log.debug("Processing ConstraintViolationException ...");
+		log.error("Exception happened while processing request", ex);
 
 		ConstraintViolation<?> next = ex.getConstraintViolations().iterator()
 				.next();
@@ -98,6 +102,7 @@ public class RestErrorHandler {
 	public RestErrorInfo handleAccessDenied(AccessDeniedException ex) {
 
 		log.debug("Processing AccessDeniedException ...");
+		log.error("Exception happened while processing request", ex);
 		return new RestErrorInfo("", ErrorConstants.ERR_ACCESS_DENIED,
 				ex.getMessage());
 	}
@@ -107,6 +112,9 @@ public class RestErrorHandler {
 	@ResponseBody
 	public RestErrorInfo handleValidationError(
 			MethodArgumentNotValidException ex) {
+
+		log.debug("Processing MethodArgumentNotValidException ...");
+		log.error("Exception happened while processing request", ex);
 
 		List<String> errors = new ArrayList<String>(
 				ex.getBindingResult().getAllErrors().size());
@@ -142,6 +150,10 @@ public class RestErrorHandler {
 	@ResponseBody
 	public RestErrorInfo processConcurencyError(
 			ConcurrencyFailureException ex) {
+		
+		log.debug("Processing ConcurrencyFailureException ...");
+		log.error("Exception happened while processing request", ex);
+
 		return new RestErrorInfo("", ErrorConstants.ERR_CONCURRENCY_FAILURE,
 				ex.getMessage());
 	}
@@ -151,6 +163,7 @@ public class RestErrorHandler {
 	@ResponseBody
 	public RestErrorInfo handleThrowableException(Throwable ex) {
 		log.debug("Processing Throwable ..." + ex.getClass().getSimpleName());
+		log.error("Exception happened while processing request", ex);
 		return new RestErrorInfo("", ErrorConstants.ERR_INTERNAL_ERR,
 				ex.getMessage());
 	}
