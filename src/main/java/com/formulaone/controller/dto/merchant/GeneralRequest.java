@@ -1,12 +1,40 @@
 package com.formulaone.controller.dto.merchant;
 
+import javax.validation.constraints.Size;
+
+import org.hibernate.validator.constraints.NotEmpty;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "GeneralRequest", description = "General request resource representation")
 public class GeneralRequest {
 
+	@NotEmpty
+	@Size(max = 2)
+	@ApiModelProperty(value = "country of incorporation", required = true)
 	private String countryOfIncorporation;
+
+	@Size(max = 50)
+	@ApiModelProperty(value = "website", required = false)
 	private String website;
+
+	@Size(max = 20)
+	@ApiModelProperty(value = "annual processing", required = false)
 	private String annualProcessing;
+
+	@NotEmpty
+	@Size(min = 28, max=250)
+	@ApiModelProperty(value = "descriptor", required = true)
 	private String descriptor;
+
+	@NotEmpty
+	@Size(max = 20)
+	@ApiModelProperty(value = "phone", required = true)
 	private String phoneNumber;
+
+	@Size(max = 40)
+	@ApiModelProperty(value = "business type", required = false)
 	private String businessType;
 
 	public GeneralRequest() {

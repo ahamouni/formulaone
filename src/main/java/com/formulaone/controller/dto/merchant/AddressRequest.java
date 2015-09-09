@@ -6,49 +6,65 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.formulaone.domain.merchant.Merchant;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel(value = "AddressRequest", description = "Merchant address resource representation")
 public class AddressRequest {
 
 	@NotEmpty
 	@Size(max = Merchant.MAX_LENGTH_NAME)
-	private String address1;
-	
+	private String address;
+
+	// Optional
+	@Size(max = Merchant.MAX_LENGTH_NAME)
 	private String address2;
-	
+
 	@NotEmpty
 	@Size(max = 30)
+	@ApiModelProperty(value = "city", required = true)
 	private String city;
-	
-	@NotEmpty
-	@Size(max = 30)
+
+	@Size(max = 2)
+	@ApiModelProperty(value = "state", required = false)
 	private String state;
-	
+
 	@NotEmpty
 	@Size(max = 20)
+	@ApiModelProperty(value = "zip code", required = true)
 	private String zipCode;
+
+	@NotEmpty
+	@Size(max = 2)
+	@ApiModelProperty(value = "country", required = true)
+	private String country;
 
 	public AddressRequest() {
 		super();
 	}
 
-	public AddressRequest(String address1, String address2, String city, String state,
-			String zipCode) {
+	public AddressRequest(String address, String address2, String city,
+			String state, String zipCode, String country) {
 
 		super();
-		this.address1 = address1;
+		this.address = address;
 		this.address2 = address2;
 		this.city = city;
 		this.state = state;
 		this.zipCode = zipCode;
+		this.country = country;
 	}
 
-	public String getAddress1() {
-		return address1;
+	@ApiModelProperty(value = "address", required = true)
+	public String getAddress() {
+		return address;
 	}
 
-	public void setAddress1(String address1) {
-		this.address1 = address1;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
+	@ApiModelProperty(value = "address2", required = false)
 	public String getAddress2() {
 		return address2;
 	}
@@ -81,11 +97,19 @@ public class AddressRequest {
 		this.zipCode = zipCode;
 	}
 
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-				"Address [address1=%s, address2=%s, city=%s, state=%s, zipCode=%s]",
-				address1, address2, city, state, zipCode);
+				"AddressRequest [address=%s, address2=%s, city=%s, state=%s, zipCode=%s, country=%s]",
+				address, address2, city, state, zipCode, country);
 	}
 
 }

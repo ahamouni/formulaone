@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.formulaone.domain.BaseAuditingEntity;
@@ -14,8 +15,11 @@ import com.formulaone.domain.BaseAuditingEntity;
 @Entity
 @Table(name = "address")
 public class Address extends BaseAuditingEntity {
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ADDRESS_ID_SEQ")
+	@SequenceGenerator(name = "ADDRESS_ID_SEQ", sequenceName = "ADDRESS_ID_SEQ", allocationSize = 1)
+
 	private Long id;
 
 	@Column(name = "address1", length = 50, nullable = false, unique = false)
@@ -27,12 +31,16 @@ public class Address extends BaseAuditingEntity {
 	@Column(name = "city", length = 30, nullable = false, unique = false)
 	private String city;
 
-	@Column(name = "state", length = 30, nullable = false, unique = false)
+	@Column(name = "state", length = 2, nullable = true, unique = false)
 	private String state;
 
 	@Column(name = "zipcode", length = 20, nullable = false, unique = false)
 	private String zipCode;
 
+	@Column(name = "country", length = 2, nullable = false, unique = false)
+	private String country;
+
+	
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "address")
 	private CompanyDetails companyDetails;
 
@@ -47,16 +55,18 @@ public class Address extends BaseAuditingEntity {
 	 * @param city
 	 * @param state
 	 * @param zipCode
+	 * @param country
 	 * @param companyDetails
 	 */
 	public Address(String address1, String address2, String city, String state,
-			String zipCode, CompanyDetails companyDetails) {
+			String zipCode, String country, CompanyDetails companyDetails) {
 		super();
 		this.address1 = address1;
 		this.address2 = address2;
 		this.city = city;
 		this.state = state;
 		this.zipCode = zipCode;
+		this.country = country;
 		this.companyDetails = companyDetails;
 	}
 
@@ -112,6 +122,14 @@ public class Address extends BaseAuditingEntity {
 		return companyDetails;
 	}
 
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	public void setCompanyDetails(CompanyDetails companyDetails) {
 		this.companyDetails = companyDetails;
 	}
@@ -119,8 +137,9 @@ public class Address extends BaseAuditingEntity {
 	@Override
 	public String toString() {
 		return String.format(
-				"Address [id=%s, address1=%s, address2=%s, city=%s, state=%s, zipCode=%s, companyDetails=%s]",
-				id, address1, address2, city, state, zipCode, companyDetails);
+				"Address [id=%s, address1=%s, address2=%s, city=%s, state=%s, zipCode=%s, country=%s, companyDetails=%s]",
+				id, address1, address2, city, state, zipCode, country,
+				companyDetails);
 	}
 
 }

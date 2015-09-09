@@ -1,5 +1,8 @@
 package com.formulaone.config;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
@@ -66,6 +69,18 @@ public class DatabaseConfig implements EnvironmentAware {
 
 		emf.setJpaVendorAdapter(vendorAdapter);
 
+		Map<String, Object> properties = new HashMap<>();
+		properties.put("hibernate.id.new_generator_mappings", env.getProperty(
+				"spring.jpa.properties.hibernate.id.new_generator_mappings"));
+		properties.put("hibernate.generate_statistics", env.getProperty(
+				"spring.jpa.properties.hibernate.generate_statistics"));
+		properties.put("hibernate.cache.use_second_level_cache",
+				env.getProperty(
+						"spring.jpa.properties.hibernate.cache.use_second_level_cache"));
+		properties.put("ibernate.cache.use_query_cache", env.getProperty(
+				"spring.jpa.properties.hibernate.cache.use_query_cache"));
+		emf.setJpaPropertyMap(properties);
+
 		return emf;
 	}
 
@@ -74,7 +89,8 @@ public class DatabaseConfig implements EnvironmentAware {
 	@ConfigurationProperties(locations = "classpath:application.yml", prefix = "spring.datasource")
 	@Primary
 	public DataSource dataSource() {
-	      log.info("Configuring JDBC datasource from " + env.getProperty("spring.active.profiles"));
+		log.info("Configuring JDBC datasource from "
+				+ env.getProperty("spring.active.profiles"));
 		return DataSourceBuilder.create().build();
 	}
 

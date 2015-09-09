@@ -9,16 +9,19 @@
 
 	<property name="autoIncrement" value="true" dbms="mysql,h2,postgresql" />
 	<property name="autoIncrement" value="false" dbms="oracle" />
-
-	<changeSet id="00000000000000" author="ilsatech" dbms="postgresql,oracle">
-		<createSequence sequenceName="hibernate_sequence"
-			startValue="100" incrementBy="1" />
-	</changeSet>
-
+	<!-- <changeSet id="00000000000000" author="ilsatech" dbms="postgresql,oracle"> 
+		<createSequence sequenceName="hibernate_sequence" startValue="2" incrementBy="1" 
+		/> </changeSet> -->
 
 	<!-- Formulaone core tables. The initial schema has the '00000000000001' 
 		id, so that it is over-written if we re-generate it. -->
 	<changeSet id="00000000000001" author="ilsatech">
+
+		<!-- Create sequences -->
+
+		<createSequence incrementBy="1" sequenceName="USER_CREDENTIALS_ID_SEQ" startValue="2" />
+
+
 
 		<createTable tableName="user_credentials">
 			<column name="id" type="bigint" autoIncrement="${autoIncrement}">
@@ -139,7 +142,7 @@
 				<constraints unique="false" nullable="false" />
 			</column>
 
-			<column name="phone" type="varchar(50)">
+			<column name="phone" type="varchar(20)">
 				<constraints unique="false" nullable="true" />
 			</column>
 
@@ -216,11 +219,11 @@
 				<constraints primaryKey="true" nullable="false" />
 			</column>
 
-			<column name="accountnumber" type="varchar(50)">
-				<constraints unique="false" nullable="false" />
+			<column name="accountnumber" type="varchar(20)">
+				<constraints unique="false" nullable="true" />
 			</column>
 
-			<column name="routingnumber" type="varchar(50)">
+			<column name="routingnumber" type="varchar(9)">
 				<constraints unique="false" nullable="false" />
 			</column>
 
@@ -253,11 +256,15 @@
 				<constraints unique="false" nullable="false" />
 			</column>
 
-			<column name="state" type="varchar(30)">
+			<column name="state" type="varchar(2)">
 				<constraints unique="false" nullable="false" />
 			</column>
 
 			<column name="zipcode" type="varchar(20)">
+				<constraints unique="false" nullable="false" />
+			</column>
+
+			<column name="country" type="varchar(2)">
 				<constraints unique="false" nullable="false" />
 			</column>
 
@@ -311,7 +318,7 @@
 			<column name="bankingdetails_id" type="bigint" />
 		</createIndex>
 
-<!--  Base prov. user_credentials and roles tables -->
+		<!-- Base prov. user_credentials and roles tables -->
 		<loadData encoding="UTF-8" file="config/liquibase/roles.csv"
 			separator=";" tableName="role" />
 

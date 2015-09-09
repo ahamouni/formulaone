@@ -9,32 +9,40 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import com.formulaone.domain.merchant.Merchant;
-import com.formulaone.domain.security.UserCredentials;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * This DTO class represents the on boarding merchant request
  */
+@ApiModel( value = "MerchantRequest", description = "Merchant resource representation" )
 public class MerchantRequest {
 
 	private Long mid;
 
 	@NotEmpty()
 	@Size(max = Merchant.MAX_LENGTH_NAME)
+	@ApiModelProperty( value = "Merchant's name", required = true ) 
 	private String name;
 	
 	@NotEmpty
 	@Size(max = Merchant.MAX_LENGTH_NAME)
 	@Email
+	@ApiModelProperty( value = "Merchant's email", required = true )
 	private String email;
 	
 	@NotEmpty
 	@Size(max = Merchant.MAX_LENGTH_NAME)
+	@ApiModelProperty( value = "Merchant's legal name", required = true )
 	private String legalName;
 
 	// Optional
+	@ApiModelProperty( value = "Business description", required = false )
 	private String businessDescription;
 
 	// Optional
+	@ApiModelProperty( value = "Average paymet amount", required = false )
 	private BigDecimal averagePaymentAmount;
 
 	@Valid

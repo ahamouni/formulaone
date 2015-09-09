@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.formulaone.domain.BaseAuditingEntity;
@@ -16,14 +17,15 @@ import com.formulaone.domain.BaseAuditingEntity;
 public class BankingDetails extends BaseAuditingEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "BANKINGDETAILS_ID_SEQ")
+	@SequenceGenerator(name = "BANKINGDETAILS_ID_SEQ", sequenceName = "BANKINGDETAILS_ID_SEQ", allocationSize = 1)
 	@Column(name = "id", nullable = false, updatable = false)
 	private Long id;
 
-	@Column(name = "accountnumber", length = 50, nullable = false, unique = false)
+	@Column(name = "accountnumber", length = 20, nullable = true, unique = false)
 	private String bankAccountNumber;
 
-	@Column(name = "routingnumber", length = 50, nullable = false, unique = false)
+	@Column(name = "routingnumber", length = 9, nullable = false, unique = false)
 	private String routingNumber;
 
 	@OneToOne(fetch = FetchType.EAGER, mappedBy = "bankingDetails")

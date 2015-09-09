@@ -4,6 +4,9 @@ import javax.validation.constraints.Size;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 /**
  * Payment details information for both US and Canada. 
  * For Usa: 
@@ -16,14 +19,17 @@ import org.hibernate.validator.constraints.NotEmpty;
  *     - Transit number: 5digits 
  *     - Institution number: 3 digits
  */
+@ApiModel(value = "BankingDetailsRequest", description = "Banking details resource representation")
 public class BankingDetailsRequest {
 
 	@NotEmpty
-	@Size(min=7, max=31)
+	@Size(max=20)
+	@ApiModelProperty(value = "bank account number", required = true)
 	private String bankAccountNumber;
 	
 	@NotEmpty
-	@Size(min=8, max=9)
+	@Size(max=9)
+	@ApiModelProperty(value = "routingnumber", required = false)
 	private String routingNumber;
 
 	public BankingDetailsRequest() {

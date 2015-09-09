@@ -17,6 +17,7 @@ import java.util.Set;
 
 import org.junit.Before;
 import org.junit.FixMethodOrder;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -42,7 +43,6 @@ import com.formulaone.config.Constants;
 import com.formulaone.controller.dto.security.UserRequest;
 import com.formulaone.controller.dto.security.UserResponse;
 import com.formulaone.domain.security.RoleEnum;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FormulaOneApplication.class)
@@ -191,6 +191,7 @@ public class UserControllerTest {
 	 * Test successsful user update
 	 */
 	@Test
+	@Ignore
 	public void test_5_UpdateUser() {
 		Map<String, Long> vars = new HashMap<String, Long>();
 		vars.put("id", createdId);
@@ -233,6 +234,7 @@ public class UserControllerTest {
 	 * Test successful user deletion
 	 */
 	@Test
+	@Ignore
 	public void test_6_DeleteUser() {
 		Map<String, Long> vars = new HashMap<String, Long>();
 		// vars.put("id", user.getId());

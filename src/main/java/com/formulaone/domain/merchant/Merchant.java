@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -22,8 +23,11 @@ import com.formulaone.domain.BaseAuditingEntity;
 public class Merchant extends BaseAuditingEntity {
 
 	public static final int MAX_LENGTH_NAME = 50;
+	
+	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MERCHANT_ID_SEQ")
+	@SequenceGenerator(name = "MERCHANT_ID_SEQ", sequenceName = "MERCHANT_ID_SEQ", allocationSize = 1)
 	@Column(name = "id", nullable = false, updatable = false)
 	private Long id;
 

@@ -2,25 +2,20 @@ package com.formulaone.controller.merchant;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
-import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.joda.time.DateTime;
 import org.junit.Before;
 import org.junit.FixMethodOrder;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.MethodSorters;
@@ -44,7 +39,6 @@ import org.springframework.web.client.RestClientException;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.formulaone.FormulaOneApplication;
 import com.formulaone.config.Constants;
 import com.formulaone.controller.dto.merchant.AddressRequest;
@@ -54,9 +48,6 @@ import com.formulaone.controller.dto.merchant.GeneralRequest;
 import com.formulaone.controller.dto.merchant.MerchantRequest;
 import com.formulaone.controller.dto.merchant.MerchantResponse;
 import com.formulaone.controller.dto.merchant.OwnershipDetailsRequest;
-import com.formulaone.controller.dto.security.UserResponse;
-import com.formulaone.domain.merchant.VerificationStatus;
-import com.formulaone.domain.security.RoleEnum;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @SpringApplicationConfiguration(classes = FormulaOneApplication.class)
@@ -95,7 +86,7 @@ public class MerchantControllerTest {
 
 		this.base = new URL(
 				"http://localhost:" + port + "/formulaone/merchant");
-			//	"http://b2bformulaone.herokuapp.com/formulaone/merchant");
+		// "http://b2bformulaone.herokuapp.com/formulaone/merchant");
 		System.out.println("LE PORT: " + port);
 		httpHeaders = createHeaders();
 	}
@@ -217,7 +208,6 @@ public class MerchantControllerTest {
 	 * Test successful user deletion
 	 */
 	@Test
-	@Ignore
 	public void test_4_SuccessMerchantDeletion() {
 		Map<String, Long> vars = new HashMap<String, Long>();
 		vars.put("id", createdId);
@@ -257,10 +247,11 @@ public class MerchantControllerTest {
 		company.setPhone("14501234123");
 
 		AddressRequest addr = new AddressRequest();
-		addr.setAddress1("123 rue Alphonse Daudet");
+		addr.setAddress("123 rue Alphonse Daudet");
 		addr.setCity("Laval");
-		addr.setState("qc");
+		addr.setState("NE");
 		addr.setZipCode("H6Y 1R5");
+		addr.setCountry("US");
 		company.setAddress(addr);
 
 		// build OwnerShip details
@@ -271,7 +262,7 @@ public class MerchantControllerTest {
 		details.setLastName("Jackson");
 		details.setMiddleName("william");
 		details.setPosition("taxi driver");
-		details.setSsn("123456");
+		details.setSsn("221-09-9307");
 		details.setTaxiId("taxi123458");
 
 		// bank details
@@ -282,8 +273,8 @@ public class MerchantControllerTest {
 		// General
 		GeneralRequest general = new GeneralRequest();
 		general.setAnnualProcessing("annualProcessing");
-		general.setCountryOfIncorporation("Canada");
-		general.setDescriptor("Descriptor");
+		general.setCountryOfIncorporation("CA");
+		general.setDescriptor("Descriptor 1234567891234567891234567");
 		general.setPhoneNumber("1514333444");
 		general.setWebsite("http://www.myComany.com");
 		general.setBusinessType("online stuff");

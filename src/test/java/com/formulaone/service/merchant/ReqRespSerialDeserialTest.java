@@ -62,7 +62,7 @@ public class ReqRespSerialDeserialTest {
 		company.setPhone("14501234123");
 
 		AddressRequest addr = new AddressRequest();
-		addr.setAddress1("123 rue Alphonse Daudet");
+		addr.setAddress("123 rue Alphonse Daudet");
 		addr.setCity("Laval");
 		addr.setState("qc");
 		addr.setZipCode("H6Y 1R5");
@@ -136,7 +136,7 @@ public class ReqRespSerialDeserialTest {
 		company.setPhone("14501234123");
 
 		AddressRequest addr = new AddressRequest();
-		addr.setAddress1("123 rue Alphonse Daudet");
+		addr.setAddress("123 rue Alphonse Daudet");
 		addr.setCity("Laval");
 		addr.setState("qc");
 		addr.setZipCode("H6Y 1R5");

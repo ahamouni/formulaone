@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,7 +27,9 @@ public final class UserCredentials extends BaseAuditingEntity {
 	public static final int MAX_LENGTH_PASSWORD = 60;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USER_CREDENTIALS_ID_SEQ")
+	// Sequence start from 2 since the first one is populated from liquibase
+	@SequenceGenerator(name = "USER_CREDENTIALS_ID_SEQ", initialValue = 2, sequenceName = "USER_CREDENTIALS_ID_SEQ", allocationSize = 1)
 	@Column(name = "id", nullable = false, updatable = false)
 	private Long id;
 
@@ -84,7 +87,8 @@ public final class UserCredentials extends BaseAuditingEntity {
 		roles.add(role);
 	}
 
-	public void update(String name, String passwordHash, Set<String> roles, Long id) {
+	public void update(String name, String passwordHash, Set<String> roles,
+			Long id) {
 		this.name = name;
 		this.passwordHash = passwordHash;
 		this.id = id;
@@ -102,7 +106,6 @@ public final class UserCredentials extends BaseAuditingEntity {
 			}
 		}
 	}
-	
 
 	public Set<String> getRolesNames() {
 		Set<String> rolesNames = new HashSet<>();
@@ -112,16 +115,15 @@ public final class UserCredentials extends BaseAuditingEntity {
 				rolesNames.add(role.getName());
 			}
 		}
-		
+
 		return rolesNames;
 
-		
 	}
 
 	@Override
 	public String toString() {
-		return "UserCredentials [id=" + id + ", name=" + name + ", passwordHash=" + passwordHash + ", roles=" + roles
-				+ "]";
+		return "UserCredentials [id=" + id + ", name=" + name
+				+ ", passwordHash=" + passwordHash + ", roles=" + roles + "]";
 	}
 
 	public static Builder getBuilder() {

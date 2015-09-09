@@ -9,6 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 
@@ -22,7 +23,8 @@ import com.formulaone.domain.BaseAuditingEntity;
 public class OwnershipDetails extends BaseAuditingEntity {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "OWNERSHIPDETAILS_ID_SEQ")
+	@SequenceGenerator(name = "OWNERSHIPDETAILS_ID_SEQ", sequenceName = "OWNERSHIPDETAILS_ID_SEQ", allocationSize = 1)
 	@Column(name = "id", nullable = false, updatable = false)
 	private Long id;
 

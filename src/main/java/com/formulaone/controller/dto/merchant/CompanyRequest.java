@@ -7,16 +7,22 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import com.formulaone.domain.merchant.Merchant;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+@ApiModel( value = "CompanyRequest", description = "Company resource representation" )
 public class CompanyRequest {
 
 	@NotEmpty
 	@Size(max = Merchant.MAX_LENGTH_NAME)
+	@ApiModelProperty( value = "Company's name", required = true )
 	private String name;
-	
+
 	@NotEmpty
-	@Size(max = Merchant.MAX_LENGTH_NAME)
+	@Size(max = 20)
+	@ApiModelProperty( value = "Merchant's phone", required = true )
 	private String phone;
-	
+
 	@Valid
 	private AddressRequest address;
 
